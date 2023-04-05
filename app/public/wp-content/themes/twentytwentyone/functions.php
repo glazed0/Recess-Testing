@@ -654,3 +654,31 @@ if ( ! function_exists( 'wp_get_list_item_separator' ) ) :
 		return __( ', ', 'twentytwentyone' );
 	}
 endif;
+
+require_once '../twentytwentyone/phpmailer/src/PHPMailer.php';
+require_once '../twentytwentyone/phpmailer/src/SMTP.php';
+require_once '../twentytwentyone/phpmailer/src/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+$mail = new PHPMailer( true );
+
+// Configure SMTP settings
+$mail->isSMTP();
+$mail->Host       = 'smtp.example.com';
+$mail->SMTPAuth   = true;
+$mail->Username   = 'user@example.com';
+$mail->Password   = 'password';
+$mail->SMTPSecure = 'tls';
+$mail->Port       = 587;
+
+// Set email content
+$mail->setFrom( 'admin@example.com', 'Admin' );
+$mail->addAddress( 'employee@example.com', 'Employee' );
+$mail->Subject = 'Test email';
+$mail->Body    = 'This is a test email.';
+
+// Send the email
+$mail->send();
